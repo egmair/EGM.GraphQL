@@ -11,7 +11,7 @@ namespace EGM.GQL.DataAccess.Primitives
         private DbContext _dbContext;   
         public DbContext Context => _dbContext ??= _instanceFunc.Invoke();
         
-        public GraphyDbContextFactory(Func<DbContext> dbContextFactory)   
+        public GraphyDbContextFactory(Func<GraphyDbContext> dbContextFactory)   
         {   
             _instanceFunc = dbContextFactory;   
         }
@@ -21,7 +21,7 @@ namespace EGM.GQL.DataAccess.Primitives
             if (_disposed || _dbContext is null) return;
             
             _disposed = true;   
-            _dbContext.Dispose();
+            _dbContext?.Dispose();
         }
     }
 }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using EGM.GQL.DataAccess.Abstractions.Repositories;
 using EGM.GQL.DataAccess.Primitives;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using EGM.GQL.Abstractions.Extensions;
 
 namespace EGM.GraphQL.API
 {
@@ -29,20 +32,26 @@ namespace EGM.GraphQL.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            LoadCustomAssemblies();
+            
             services.AddControllers();
+            services.InstallDependenciesFromAssemblies(Configuration);
+        }
 
-            services.AddDbContext<GraphyDbContext>(options =>
-            {
-                var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
-                options.UseMySql(connectionString: Configuration.GetConnectionString("MySql"),
-                        serverVersion: serverVersion)
-                    .LogTo(Console.WriteLine, LogLevel.Information)
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors();
-            });
+        // ReSharper disable once MemberCanBeMadeStatic.Local
+        private void LoadCustomAssemblies()
+        {
+            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+            var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
+            var referencedPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll");
 
-            services.AddScoped(typeof(IRepository<>), typeof(IRepository<>))
-                .AddScoped<Func<DbContext>>(provider => provider.GetService<DbContext>);
+            var assembliesToLoad = referencedPaths
+                .Where(p => !loadedPaths.Contains(p, StringComparer.InvariantCultureIgnoreCase))
+                .Where(a => a.Contains("EGM.GQL."))
+                .ToList();
+
+            assembliesToLoad.ForEach(p =>
+                loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(p))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
