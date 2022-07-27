@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EGM.GQL.DataAccess.Primitives;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -17,7 +18,7 @@ namespace EGM.GraphQL.API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
+        
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
