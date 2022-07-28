@@ -20,6 +20,8 @@
     <ItemGroup>
       <ProjectReference Include="..\EGM.GQL.DataAccess.Primitives\EGM.GQL.DataAccess.Primitives.csproj" />
       <ProjectReference Include="..\EGM.GQL.DataAccess\EGM.GQL.DataAccess.csproj" />
+      <ProjectReference Include="..\EGM.GQL.Mappers\EGM.GQL.Mappers.csproj" />
+      <ProjectReference Include="..\EGM.GQL.Services\EGM.GQL.Services.csproj" />
     </ItemGroup>
 
 

@@ -13,6 +13,10 @@ namespace EGM.GQL.DataAccess.Primitives
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
+            modelBuilder.Entity<DbPerson>();
+            modelBuilder.Entity<DbSex>();
+            
         }
     }
 }

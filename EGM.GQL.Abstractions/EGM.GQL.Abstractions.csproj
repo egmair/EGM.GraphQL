@@ -16,8 +16,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="LanguageExt.Core" Version="4.2.9" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EGM.GQL.DataAccess.Primitives\EGM.GQL.DataAccess.Primitives.csproj" />
+      <ProjectReference Include="..\EGM.GQL.Primitives\EGM.GQL.Primitives.csproj" />
     </ItemGroup>
 
 </Project>

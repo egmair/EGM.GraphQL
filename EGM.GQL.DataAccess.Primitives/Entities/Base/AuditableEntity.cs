@@ -12,10 +12,10 @@ namespace EGM.GQL.DataAccess.Primitives.Entities.Base
         [Column("CREATED_BY")]
         public string CreatedBy { get; set; }
         
-        [Column("UPDATED")]
+        [Column("MODIFIED")]
         public DateTime? Updated { get; set; }
         
-        [Column("UPDATED_BY")]
+        [Column("MODIFIED_BY")]
         public string UpdatedBy { get; set; }
     }
 }

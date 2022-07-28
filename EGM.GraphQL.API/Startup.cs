@@ -1,21 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using EGM.GQL.DataAccess.Abstractions.Repositories;
-using EGM.GQL.DataAccess.Primitives;
-using EGM.GQL.DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using EGM.GQL.Abstractions.Extensions;
 
 namespace EGM.GraphQL.API
@@ -32,15 +23,6 @@ namespace EGM.GraphQL.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            LoadCustomAssemblies();
-            
-            services.AddControllers();
-            services.InstallDependenciesFromAssemblies(Configuration);
-        }
-
-        // ReSharper disable once MemberCanBeMadeStatic.Local
-        private void LoadCustomAssemblies()
-        {
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
             var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
             var referencedPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll");
@@ -52,6 +34,15 @@ namespace EGM.GraphQL.API
 
             assembliesToLoad.ForEach(p =>
                 loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(p))));
+            
+            services.AddControllers();
+            services.InstallDependenciesFromAssemblies(Configuration, AppDomain.CurrentDomain.GetAssemblies());
+        }
+
+        // ReSharper disable once MemberCanBeMadeStatic.Local
+        private void LoadCustomAssemblies()
+        {
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
