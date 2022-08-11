@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-      <UserSecretsId>a2252376-adad-4a11-95bf-15f651b89a6e</UserSecretsId>
-      <Configurations>Release;Debug</Configurations>
-      <Platforms>x64</Platforms>
+        <UserSecretsId>a2252376-adad-4a11-95bf-15f651b89a6e</UserSecretsId>
+        <Configurations>Release;Debug</Configurations>
+        <Platforms>x64</Platforms>
   </PropertyGroup>
 
     <ItemGroup>
