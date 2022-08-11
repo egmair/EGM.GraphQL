@@ -14,6 +14,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="HotChocolate.AspNetCore" Version="12.12.1" />
+      <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="12.12.1" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
     </ItemGroup>
 
@@ -21,6 +23,7 @@
       <ProjectReference Include="..\EGM.GQL.DataAccess.Primitives\EGM.GQL.DataAccess.Primitives.csproj" />
       <ProjectReference Include="..\EGM.GQL.DataAccess\EGM.GQL.DataAccess.csproj" />
       <ProjectReference Include="..\EGM.GQL.Mappers\EGM.GQL.Mappers.csproj" />
+      <ProjectReference Include="..\EGM.GQL.Queries\EGM.GQL.Queries.csproj" />
       <ProjectReference Include="..\EGM.GQL.Services\EGM.GQL.Services.csproj" />
     </ItemGroup>
 

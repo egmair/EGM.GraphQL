@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EGM.GQL.Abstractions.Extensions;
+using EGM.GQL.Queries.QueryTypes;
 
 namespace EGM.GraphQL.API
 {
@@ -36,6 +37,8 @@ namespace EGM.GraphQL.API
                 loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(p))));
             
             services.AddControllers();
+            services.AddGraphQLServer()
+                .AddQueryType<PersonQueryType>();
             services.InstallDependenciesFromAssemblies(Configuration, AppDomain.CurrentDomain.GetAssemblies());
         }
 
@@ -53,7 +56,11 @@ namespace EGM.GraphQL.API
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapGraphQL();
+            });
         }
     }
 }
