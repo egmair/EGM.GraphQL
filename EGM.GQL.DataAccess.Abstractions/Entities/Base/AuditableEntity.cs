@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using EGM.GQL.DataAccess.Abstractions.Entities;
+using EGM.GQL.DataAccess.Abstractions.Entities.Interfaces;
 
-namespace EGM.GQL.DataAccess.Primitives.Entities.Base
+namespace EGM.GQL.DataAccess.Abstractions.Entities.Base
 {
     public class AuditableEntity : EntityBase, IAuditableEntity
     {

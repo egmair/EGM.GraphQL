@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using EGM.GQL.DataAccess.Abstractions.Entities;
+using EGM.GQL.DataAccess.Abstractions.Entities.Interfaces;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace EGM.GQL.DataAccess.Abstractions.Repositories

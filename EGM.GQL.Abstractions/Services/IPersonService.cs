@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EGM.GQL.DataAccess.Primitives.Entities;
+using EGM.GQL.DataAccess.Abstractions.Entities;
 using EGM.GQL.Primitives.Models;
 using LanguageExt.Common;
 using Microsoft.EntityFrameworkCore.Query;

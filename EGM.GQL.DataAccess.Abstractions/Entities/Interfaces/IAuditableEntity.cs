@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EGM.GQL.DataAccess.Abstractions.Entities
+namespace EGM.GQL.DataAccess.Abstractions.Entities.Interfaces
 {
     public interface IAuditableEntity : IEntityBase
     {

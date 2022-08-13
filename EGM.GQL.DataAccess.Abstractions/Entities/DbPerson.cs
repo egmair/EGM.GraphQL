@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.InteropServices;
-using EGM.GQL.DataAccess.Primitives.Entities.Base;
+using EGM.GQL.DataAccess.Abstractions.Entities.Base;
 
-namespace EGM.GQL.DataAccess.Primitives.Entities
+namespace EGM.GQL.DataAccess.Abstractions.Entities
 {
     [Table("people")]
     public sealed class DbPerson : AuditableEntity

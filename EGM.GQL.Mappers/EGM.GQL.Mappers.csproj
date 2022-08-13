@@ -11,7 +11,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EGM.GQL.Abstractions\EGM.GQL.Abstractions.csproj" />
-      <ProjectReference Include="..\EGM.GQL.DataAccess.Primitives\EGM.GQL.DataAccess.Primitives.csproj" />
       <ProjectReference Include="..\EGM.GQL.Primitives\EGM.GQL.Primitives.csproj" />
     </ItemGroup>
 

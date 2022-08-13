@@ -2,8 +2,6 @@
 using EGM.GQL.Abstractions.DependencyInjection;
 using EGM.GQL.DataAccess.Abstractions;
 using EGM.GQL.DataAccess.Abstractions.Repositories;
-using EGM.GQL.DataAccess.Primitives;
-using EGM.GQL.DataAccess.Primitives.Entities;
 using EGM.GQL.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,10 +25,8 @@ namespace EGM.GQL.DataAccess
             });
 
             serviceCollection.AddScoped(typeof(IRepository<>), typeof(Repository<>))
-                .AddScoped<IPersonRepository<DbPerson>, PersonRepository>()
-                .AddScoped<Func<GraphyDbContext>>(provider => provider.GetService<GraphyDbContext>)
-                .AddScoped<IUnitOfWork, UnitOfWork>()
-                .AddScoped<GraphyDbContextFactory>();
+                .AddScoped<IPersonRepository, PersonRepository>()
+                .AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }

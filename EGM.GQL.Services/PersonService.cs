@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EGM.GQL.Abstractions.Services;
 using EGM.GQL.DataAccess.Abstractions;
+using EGM.GQL.DataAccess.Abstractions.Entities;
 using EGM.GQL.DataAccess.Abstractions.Repositories;
-using EGM.GQL.DataAccess.Primitives.Entities;
 using EGM.GQL.Primitives.Models;
 using LanguageExt.Common;
 using Microsoft.EntityFrameworkCore.Query;
@@ -18,13 +18,11 @@ namespace EGM.GQL.Services
     internal sealed class PersonService : IPersonService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IPersonRepository<DbPerson> _repository;
         private readonly IMapper _mapper;
 
-        public PersonService(IUnitOfWork unitOfWork, IPersonRepository<DbPerson> repository, IMapper mapper)
+        public PersonService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         
@@ -33,7 +31,7 @@ namespace EGM.GQL.Services
             Func<IQueryable<DbPerson>, IIncludableQueryable<DbPerson, object>> include = null,
             bool disableTracking = true, CancellationToken cancellationToken = default)
         {
-            var entities = await _repository.GetAllAsync(orderBy, include, disableTracking,
+            var entities = await _unitOfWork.People.GetAllAsync(orderBy, include, disableTracking,
                 cancellationToken);
 
             var people = _mapper.Map<IList<DbPerson>, IList<Person>>(entities);
@@ -43,7 +41,7 @@ namespace EGM.GQL.Services
 
         public async Task<Result<Person>> GetPersonByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var entity = await _repository.FindAsync(cancellationToken, id);
+            var entity = await _unitOfWork.People.FindAsync(cancellationToken, id);
 
             if (entity is null)
             {

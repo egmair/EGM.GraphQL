@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using EGM.GQL.DataAccess.Primitives.Entities.Base;
+using EGM.GQL.DataAccess.Abstractions.Entities.Base;
 
-namespace EGM.GQL.DataAccess.Primitives.Entities
+namespace EGM.GQL.DataAccess.Abstractions.Entities
 {
     [Table("sex")]
     public sealed class DbSex : EntityBase

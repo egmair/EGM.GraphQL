@@ -1,7 +1,7 @@
-﻿using EGM.GQL.DataAccess.Primitives.Entities;
+﻿using EGM.GQL.DataAccess.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace EGM.GQL.DataAccess.Primitives
+namespace EGM.GQL.DataAccess
 {
     public sealed class GraphyDbContext : DbContext
     {
@@ -14,7 +14,8 @@ namespace EGM.GQL.DataAccess.Primitives
         {
             base.OnModelCreating(modelBuilder);
             
-            modelBuilder.Entity<DbPerson>();
+            modelBuilder.Entity<DbPerson>()
+                .HasOne(person => person.Sex);
             modelBuilder.Entity<DbSex>();
             
         }

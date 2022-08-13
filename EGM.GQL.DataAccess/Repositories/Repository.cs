@@ -4,25 +4,23 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using EGM.GQL.DataAccess.Abstractions.Entities;
+using EGM.GQL.DataAccess.Abstractions.Entities.Base;
+using EGM.GQL.DataAccess.Abstractions.Entities.Interfaces;
 using EGM.GQL.DataAccess.Abstractions.Repositories;
-using EGM.GQL.DataAccess.Primitives;
-using EGM.GQL.DataAccess.Primitives.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace EGM.GQL.DataAccess.Repositories
 {
-    internal class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase
     {
-        private readonly GraphyDbContextFactory _factory;
-        private DbSet<TEntity> _dbSet;
-
-        protected DbSet<TEntity> Table => _dbSet ??= _factory.Context.Set<TEntity>();
-
-        public Repository(GraphyDbContextFactory factory)
+        private readonly GraphyDbContext _context;
+        private readonly DbSet<TEntity> _dbSet;
+        
+        public Repository(GraphyDbContext context)
         {
-            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _dbSet = _context.Set<TEntity>();
         }
         
         public async Task InsertAsync(TEntity entity, string createdBy = "",
@@ -34,7 +32,7 @@ namespace EGM.GQL.DataAccess.Repositories
                 ((IAuditableEntity)entity).CreatedBy = createdBy;
             }
 
-            await Table.AddAsync(entity, cancellationToken);
+            await _dbSet.AddAsync(entity, cancellationToken);
         }
 
         public void Update(TEntity entity, string updatedBy = "")
@@ -45,27 +43,28 @@ namespace EGM.GQL.DataAccess.Repositories
                 ((IAuditableEntity)entity).UpdatedBy = updatedBy;
             }
             
-            Table.Update(entity);
+            _dbSet.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Delete(TEntity entity) => Table.Remove(entity);
+        public void Delete(TEntity entity) => _dbSet.Remove(entity);
 
         public async Task DeleteAsync(Guid entityId, CancellationToken cancellationToken = default)
         {
-            var entity = await Table.FindAsync(entityId, cancellationToken);
+            var entity = await _dbSet.FindAsync(entityId, cancellationToken);
 
             if (entity is null)
             {
-                return;
+                throw new InvalidOperationException($"Could not find entity with Id: {entityId}");
             }
 
-            Table.Remove(entity);
+            _dbSet.Remove(entity);
         }
 
-        public TEntity Find(params object[] keyValues) => Table.Find(keyValues);
+        public TEntity Find(params object[] keyValues) => _dbSet.Find(keyValues);
 
         public async Task<TEntity> FindAsync(CancellationToken cancellationToken = default, params object[] keyValues)
-            => await Table.FindAsync(keyValues, cancellationToken);
+            => await _dbSet.FindAsync(keyValues, cancellationToken);
 
         public async Task<IList<TEntity>> GetAllAsync(
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -109,7 +108,7 @@ namespace EGM.GQL.DataAccess.Repositories
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             bool disableTracking = true)
         {
-            IQueryable<TEntity> query = Table;
+            IQueryable<TEntity> query = _dbSet;
 
             if (disableTracking)
             {
