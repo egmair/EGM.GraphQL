@@ -12,11 +12,11 @@ namespace EGM.GQL.Abstractions.Services
 {
     public interface IPersonService
     {
-        Task<Result<IList<Person>>> GetAllPeopleAsync(
+        Task<Result<IQueryable<Person>>> GetAllPeopleAsync(
             Func<IQueryable<DbPerson>, IOrderedQueryable<DbPerson>> orderBy = null,
             Func<IQueryable<DbPerson>, IIncludableQueryable<DbPerson, object>> include = null,
             bool disableTracking = true, CancellationToken cancellationToken = default);
 
-        Task<Result<Person>> GetPersonByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<Result<Person?>> GetPersonByIdAsync(Guid id, CancellationToken cancellationToken = default);
     }
 }

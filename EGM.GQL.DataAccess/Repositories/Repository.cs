@@ -66,20 +66,20 @@ namespace EGM.GQL.DataAccess.Repositories
         public async Task<TEntity> FindAsync(CancellationToken cancellationToken = default, params object[] keyValues)
             => await _dbSet.FindAsync(keyValues, cancellationToken);
 
-        public async Task<IList<TEntity>> GetAllAsync(
+        public Task<IQueryable<TEntity>> GetAllAsync(
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             bool disableTracking = true,
             CancellationToken cancellationToken = default)
-            => await BuildQuery(null, orderBy, include, disableTracking).ToListAsync(cancellationToken);
+            => Task.FromResult(BuildQuery(null, orderBy, include, disableTracking));
 
-        public async Task<IList<TEntity>> GetAsync(
+        public Task<IQueryable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> where = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             bool disableTracking = true,
             CancellationToken cancellationToken = default)
-            => await BuildQuery(where, orderBy, include, disableTracking).ToListAsync(cancellationToken);
+            => Task.FromResult(BuildQuery(where, orderBy, include, disableTracking));
 
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> selector,
             Expression<Func<TEntity, bool>> where = null,

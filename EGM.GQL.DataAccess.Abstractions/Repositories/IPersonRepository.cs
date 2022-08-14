@@ -19,7 +19,7 @@ namespace EGM.GQL.DataAccess.Abstractions.Repositories
         /// <param name="disableTracking">Whether tracking should be disabled or not.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>An <see cref="IList{T}"/> of records.</returns>
-        Task<IList<DbPerson>> GetByEmailAsync(string emailAddress,
+        Task<IQueryable<DbPerson>> GetByEmailAsync(string emailAddress,
             Func<IQueryable<DbPerson>, IOrderedQueryable<DbPerson>> orderBy = null,
             Func<IQueryable<DbPerson>, IIncludableQueryable<DbPerson, object>> include = null,
             bool disableTracking = true, CancellationToken cancellationToken = default);

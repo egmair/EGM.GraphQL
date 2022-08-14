@@ -15,7 +15,7 @@ namespace EGM.GQL.DataAccess.Repositories
         {
         }
 
-        public async Task<IList<DbPerson>> GetByEmailAsync(string emailAddress,
+        public async Task<IQueryable<DbPerson>> GetByEmailAsync(string emailAddress,
             Func<IQueryable<DbPerson>, IOrderedQueryable<DbPerson>> orderBy = null,
             Func<IQueryable<DbPerson>, IIncludableQueryable<DbPerson, object>> include = null,
             bool disableTracking = true, CancellationToken cancellationToken = default)

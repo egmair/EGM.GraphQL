@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using EGM.GQL.Abstractions.Exceptions;
 using EGM.GQL.Abstractions.Services;
 using EGM.GQL.DataAccess.Abstractions;
 using EGM.GQL.DataAccess.Abstractions.Entities;
@@ -26,7 +27,7 @@ namespace EGM.GQL.Services
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         
-        public async Task<Result<IList<Person>>> GetAllPeopleAsync(
+        public async Task<Result<IQueryable<Person>>> GetAllPeopleAsync(
             Func<IQueryable<DbPerson>, IOrderedQueryable<DbPerson>> orderBy = null,
             Func<IQueryable<DbPerson>, IIncludableQueryable<DbPerson, object>> include = null,
             bool disableTracking = true, CancellationToken cancellationToken = default)
@@ -34,18 +35,18 @@ namespace EGM.GQL.Services
             var entities = await _unitOfWork.People.GetAllAsync(orderBy, include, disableTracking,
                 cancellationToken);
 
-            var people = _mapper.Map<IList<DbPerson>, IList<Person>>(entities);
-
-            return new Result<IList<Person>>(people);
+            var people = _mapper.ProjectTo<Person>(entities);
+            
+            return new Result<IQueryable<Person>>(people);
         }
 
-        public async Task<Result<Person>> GetPersonByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Result<Person?>> GetPersonByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var entity = await _unitOfWork.People.FindAsync(cancellationToken, id);
 
             if (entity is null)
             {
-                var exception = new Exception($"Person with Id {id} not found.");
+                var exception = new EntityDoesNotExistException<DbPerson>($"Person with Id {id} not found.");
                 return new Result<Person>(exception);
             }
 

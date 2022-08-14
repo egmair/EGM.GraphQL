@@ -6,6 +6,14 @@
         <Platforms>x64</Platforms>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+      <PlatformTarget>AnyCPU</PlatformTarget>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+      <PlatformTarget>AnyCPU</PlatformTarget>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\EGM.GQL.Abstractions\EGM.GQL.Abstractions.csproj" />
       <ProjectReference Include="..\EGM.GQL.DataAccess.Abstractions\EGM.GQL.DataAccess.Abstractions.csproj" />

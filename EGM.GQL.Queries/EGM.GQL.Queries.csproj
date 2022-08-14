@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <PackageReference Include="HotChocolate.Abstractions" Version="12.12.1" />
+      <PackageReference Include="HotChocolate.Data" Version="12.12.1" />
       <PackageReference Include="HotChocolate.Types" Version="12.12.1" />
     </ItemGroup>
 

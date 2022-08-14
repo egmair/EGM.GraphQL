@@ -10,11 +10,13 @@ namespace EGM.GQL.Queries.QueryTypes
         {
             descriptor
                 .Field(p => p.GetPersonByIdAsync(default!, default!, default!))
+                .UseProjection()
                 .Type<PersonType>();
 
             descriptor
                 .Field(p => p.GetAllAsync(default!, default!))
-                .Type<PersonType>();
+                .UseProjection()
+                .Type<ListType<PersonType>>();
         }
     }
 }

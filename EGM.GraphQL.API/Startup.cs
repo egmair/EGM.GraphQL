@@ -38,7 +38,8 @@ namespace EGM.GraphQL.API
             
             services.AddControllers();
             services.AddGraphQLServer()
-                .AddQueryType<PersonQueryType>();
+                .AddQueryType<PersonQueryType>()
+                .AddProjections();
             services.InstallDependenciesFromAssemblies(Configuration, AppDomain.CurrentDomain.GetAssemblies());
         }
 

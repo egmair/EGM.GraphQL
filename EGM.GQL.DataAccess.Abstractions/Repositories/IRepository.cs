@@ -66,7 +66,7 @@ namespace EGM.GQL.DataAccess.Abstractions.Repositories
         /// <param name="disableTracking">Whether tracking should be disabled or not.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>An <see cref="IQueryable{T}"/> of records.</returns>
-        Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        Task<IQueryable<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             bool disableTracking = true, CancellationToken cancellationToken = default);
 
@@ -79,7 +79,7 @@ namespace EGM.GQL.DataAccess.Abstractions.Repositories
         /// <param name="disableTracking">Whether tracking should be disabled or not.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>An <see cref="IQueryable{T}"/> of records.</returns>
-        Task<IList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> where = null,
+        Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> where = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
             bool disableTracking = true, CancellationToken cancellationToken = default);

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EGM.GQL.Abstractions.Services;
 using EGM.GQL.Primitives.Models;
 using HotChocolate;
+using HotChocolate.Execution;
 
 namespace EGM.GQL.Queries.Queries
 {
@@ -19,7 +21,7 @@ namespace EGM.GQL.Queries.Queries
             return result.Match(person => person, exception => throw exception);
         }
 
-        public async Task<IEnumerable<Person>> GetAllAsync([Service] IPersonService personService,
+        public async Task<IQueryable<Person>> GetAllAsync([Service] IPersonService personService,
             CancellationToken cancellationToken = default)
         {
             var result = await personService.GetAllPeopleAsync(cancellationToken: cancellationToken);
