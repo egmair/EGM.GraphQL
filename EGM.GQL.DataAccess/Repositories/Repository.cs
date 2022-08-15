@@ -17,9 +17,9 @@ namespace EGM.GQL.DataAccess.Repositories
         private readonly GraphyDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
         
-        public Repository(GraphyDbContext context)
+        public Repository(GraphyDbContext dbContextFactory)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
             _dbSet = _context.Set<TEntity>();
         }
         

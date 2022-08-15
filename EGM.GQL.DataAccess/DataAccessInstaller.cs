@@ -14,19 +14,29 @@ namespace EGM.GQL.DataAccess
     {
         public void InstallDependencies(IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            serviceCollection.AddDbContext<GraphyDbContext>(options =>
+            // serviceCollection.AddDbContext<GraphyDbContext>(options =>
+            // {
+            //     ConfigureDbContext(configuration, options);
+            // });
+                
+            serviceCollection.AddPooledDbContextFactory<GraphyDbContext>(options =>
             {
-                var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
-                options.UseMySql(connectionString: configuration.GetConnectionString("MySql"),
-                        serverVersion: serverVersion)
-                    .LogTo(Console.WriteLine, LogLevel.Information)
-                    .EnableSensitiveDataLogging()
-                    .EnableDetailedErrors();
-            });
+                ConfigureDbContext(configuration, options);
+            });;
 
-            serviceCollection.AddScoped(typeof(IRepository<>), typeof(Repository<>))
-                .AddScoped<IPersonRepository, PersonRepository>()
-                .AddScoped<IUnitOfWork, UnitOfWork>();
+            serviceCollection//.AddTransient(typeof(IRepository<>), typeof(Repository<>))
+                // .AddTransient<IPersonRepository, PersonRepository>()
+                .AddTransient<IUnitOfWork, UnitOfWork>();
+        }
+
+        private static void ConfigureDbContext(IConfiguration configuration, DbContextOptionsBuilder options)
+        {
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
+            options.UseMySql(connectionString: configuration.GetConnectionString("MySql"),
+                    serverVersion: serverVersion)
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors();
         }
     }
 }

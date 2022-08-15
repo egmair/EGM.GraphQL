@@ -5,6 +5,7 @@ using EGM.GQL.DataAccess.Abstractions;
 using EGM.GQL.DataAccess.Abstractions.Entities;
 using EGM.GQL.DataAccess.Abstractions.Repositories;
 using EGM.GQL.DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EGM.GQL.DataAccess
@@ -21,9 +22,9 @@ namespace EGM.GQL.DataAccess
         private IRepository<DbSex> _sexRepository;
         public IRepository<DbSex> Sexes => _sexRepository ??= new Repository<DbSex>(_context);
 
-        public UnitOfWork(GraphyDbContext dbContext)
+        public UnitOfWork(IDbContextFactory<GraphyDbContext> dbContextFactory)
         {
-            _context = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _context = dbContextFactory?.CreateDbContext() ?? throw new ArgumentNullException(nameof(dbContextFactory));
         }
         
         public async Task SaveAsync(CancellationToken cancellationToken = default)

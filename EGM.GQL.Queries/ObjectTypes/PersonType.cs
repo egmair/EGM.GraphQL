@@ -1,11 +1,12 @@
-﻿using EGM.GQL.Primitives.Models;
+﻿using EGM.GQL.DataAccess.Abstractions.Entities;
+using EGM.GQL.Primitives.Models;
 using HotChocolate.Types;
 
 namespace EGM.GQL.Queries.ObjectTypes
 {
-    internal sealed class PersonType : ObjectType<Person>
+    internal sealed class PersonType : ObjectType<DbPerson>
     {
-        protected override void Configure(IObjectTypeDescriptor<Person> descriptor)
+        protected override void Configure(IObjectTypeDescriptor<DbPerson> descriptor)
         {
             descriptor
                 .Field(f => f.Id)

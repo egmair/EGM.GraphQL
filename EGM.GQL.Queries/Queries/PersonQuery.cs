@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EGM.GQL.Abstractions.Services;
-using EGM.GQL.Primitives.Models;
+using EGM.GQL.DataAccess.Abstractions;
+using EGM.GQL.DataAccess.Abstractions.Entities;
 using HotChocolate;
-using HotChocolate.Execution;
 
 namespace EGM.GQL.Queries.Queries
 {
@@ -14,18 +11,18 @@ namespace EGM.GQL.Queries.Queries
     {
         #nullable enable
         
-        public async Task<Person?> GetPersonByIdAsync(Guid id, [Service] IPersonService personService,
-            CancellationToken cancellationToken = default)
-        {
-            var result = await personService.GetPersonByIdAsync(id, cancellationToken);
-            return result.Match(person => person, exception => throw exception);
-        }
+        // public async Task<Person?> GetPersonByIdAsync(Guid id, [Service] IPersonService personService,
+        //     CancellationToken cancellationToken = default)
+        // {
+        //     person
+        //     var result = await personService.GetPersonByIdAsync(id, cancellationToken);
+        //     return result.Match(person => person, exception => throw exception);
+        // }
 
-        public async Task<IQueryable<Person>> GetAllAsync([Service] IPersonService personService,
+        public async Task<IQueryable<DbPerson>> GetAllAsync([Service] IUnitOfWork unitOfWork,
             CancellationToken cancellationToken = default)
         {
-            var result = await personService.GetAllPeopleAsync(cancellationToken: cancellationToken);
-            return result.Match(people => people, exception => throw exception);
+            return await unitOfWork.People.GetAllAsync(cancellationToken: cancellationToken);
         }
 
         #nullable disable

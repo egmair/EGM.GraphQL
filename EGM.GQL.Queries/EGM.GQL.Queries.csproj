@@ -6,13 +6,19 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EGM.GQL.Abstractions\EGM.GQL.Abstractions.csproj" />
+      <ProjectReference Include="..\EGM.GQL.DataAccess\EGM.GQL.DataAccess.csproj" />
       <ProjectReference Include="..\EGM.GQL.Primitives\EGM.GQL.Primitives.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="HotChocolate.Abstractions" Version="12.12.1" />
       <PackageReference Include="HotChocolate.Data" Version="12.12.1" />
+      <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.12.1" />
       <PackageReference Include="HotChocolate.Types" Version="12.12.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="FilterTypes" />
     </ItemGroup>
 
 </Project>

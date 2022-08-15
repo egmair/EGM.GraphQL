@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EGM.GQL.Abstractions.Extensions;
 using EGM.GQL.Queries.QueryTypes;
+using HotChocolate.Data;
 
 namespace EGM.GraphQL.API
 {
@@ -38,8 +39,10 @@ namespace EGM.GraphQL.API
             
             services.AddControllers();
             services.AddGraphQLServer()
-                .AddQueryType<PersonQueryType>()
-                .AddProjections();
+                .AddFiltering()
+                .AddProjections()
+                .AddQueryType<PersonQueryType>();
+            
             services.InstallDependenciesFromAssemblies(Configuration, AppDomain.CurrentDomain.GetAssemblies());
         }
 

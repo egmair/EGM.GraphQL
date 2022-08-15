@@ -5,13 +5,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using EGM.GQL.DataAccess.Abstractions.Entities;
 using EGM.GQL.DataAccess.Abstractions.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace EGM.GQL.DataAccess.Repositories
 {
     internal sealed class PersonRepository : Repository<DbPerson>, IPersonRepository
     {
-        public PersonRepository(GraphyDbContext context) : base(context)
+        public PersonRepository(GraphyDbContext dbContextFactory) : base(dbContextFactory)
         {
         }
 
