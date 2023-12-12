@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EGM.GraphQL", "EGM.GraphQL\EGM.GraphQL.csproj", "{7ECA1FF6-411A-4441-A9C9-B51DA5599D8E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{02245392-62CA-415A-BAF1-43288999606F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7ECA1FF6-411A-4441-A9C9-B51DA5599D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ECA1FF6-411A-4441-A9C9-B51DA5599D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ECA1FF6-411A-4441-A9C9-B51DA5599D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ECA1FF6-411A-4441-A9C9-B51DA5599D8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02245392-62CA-415A-BAF1-43288999606F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02245392-62CA-415A-BAF1-43288999606F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02245392-62CA-415A-BAF1-43288999606F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02245392-62CA-415A-BAF1-43288999606F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A76F7EC7-A049-4A2C-B977-BC1315F19AE3}
+	EndGlobalSection
+EndGlobal

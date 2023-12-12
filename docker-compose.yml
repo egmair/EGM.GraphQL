@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  egm.graphql:
+    image: ${DOCKER_REGISTRY-}egmgraphql
+    build:
+      context: .
+      dockerfile: EGM.GraphQL/Dockerfile
